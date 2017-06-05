@@ -9,6 +9,7 @@ from datetime import datetime
 from bikes import Mtb
 from bikes import Bmx
 import posts
+import stations
 
 def create_app(config_name):
 
@@ -81,13 +82,22 @@ def create_app(config_name):
     	return jsonify(merge)
 
     #using our custom module that returns a local file of json
-    @app.route('/posts')
+    @app.route('/api/posts')
     def api_posts():
 
     	allPosts = posts.getposts()
 
         #as we have json lets return a flask response object
     	return Response(allPosts, status=200, mimetype='application/json')
+
+    #using our custom module that returns a local file of json
+    @app.route('/api/stations')
+    def api_stations():
+
+        allStations = stations.getAll()
+
+        #as we have json lets return a flask response object
+        return Response(allStations, status=200, mimetype='application/json')
 
     #finally return the flask app instance to our entry file
     return app
